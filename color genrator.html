@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>color</title>
+</head>
+
+<body>
+    <style>
+        .main{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-self: center;
+        }
+        .box {
+            height: 200px;
+            width: 400px;
+            border: 2px solid black;
+            border-radius: 10px;
+            justify-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            margin-left: 400px;
+        }
+        .box3{
+            height: 480px;
+            width: 600px;
+            border: 2px solid black;
+            border-radius: 10px;
+            position: relative;
+            bottom: 480px;
+            left: 20px;
+        }
+        .btn{
+            margin-left: 120px;
+            text-align: center;
+        }
+    </style>
+    <div class="main">
+        <div class="box">
+            <h1>1. SetInterval</h1>
+            <p>This replace over and over.</p>
+            <div style="font-weight: bold;">Count: <span class="count"></span></div>
+            <p style="font-style: italic;">(Update every 1 second)</p>
+        </div>
+        <div class="box box2">
+            <h1>2. SetTimeout</h1>
+            <p>This happens exactly once after a delay.</p>
+            <button class="btn">click me & wait 3 seconds</button>
+        </div>
+    </div>
+    <div class="box3"></div>
+
+    <script>
+        function generate() {
+            const r = Math.floor(Math.random()*255)
+            const g = Math.floor(Math.random()*255)
+            const b = Math.floor(Math.random()*255)
+            return `rgb(${r},${g},${b})`
+        }
+        let random = document.querySelector(".box3");
+
+        let interval = setInterval(() => {
+            random.style.backgroundColor = generate()
+            console.log();
+            
+            }, 1000);
+            
+        //=================================================
+        let box2 = document.querySelector(".box2")
+        let btn = document.querySelector(".btn")
+        btn.addEventListener("click",() => {
+            let create = document.createElement("p")
+            create.setAttribute("style","font-weight: bold;")
+            create.innerHTML=`Wait...`
+            
+            box2.appendChild(create)
+            let timeout =setTimeout(() => {
+                create.innerHTML=`Hello! The 3 seconds are up!`
+            }, 3000);
+
+        })
+        // -----------------------------
+         let count = 0;
+        setInterval(() => {
+            let numb = document.querySelector(".count")
+            count++
+            numb.textContent = count
+            
+        }, 1000);
+        </script>
+</body>
+
+</html>
