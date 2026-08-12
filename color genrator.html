@@ -4,47 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>color</title>
-</head>
-
-<body>
+    <title>Asynchronous JavaScript & DOM Practice</title>
     <style>
-        .main{
+        body {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .main {
             display: flex;
             flex-direction: column;
             gap: 20px;
             justify-self: center;
         }
+
         .box {
-            height: 200px;
+            height: 220px;
             width: 400px;
             border: 2px solid black;
             border-radius: 10px;
-            justify-items: center;
-            justify-content: center;
-            margin-top: 50px;
-            margin-left: 400px;
-        }
-        .box3{
-            height: 480px;
-            width: 600px;
-            border: 2px solid black;
-            border-radius: 10px;
-            position: relative;
-            bottom: 480px;
-            left: 20px;
-        }
-        .btn{
-            margin-left: 120px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
             text-align: center;
         }
+
+        .box3 {
+            height: 460px;
+            width: 400px;
+            border: 2px solid black;
+            border-radius: 10px;
+            background-color: white;
+            transition: background-color 0.5s ease; 
+        }
+
+        .btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #f0f0f0;
+        }
+
+        .btn:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
     </style>
+</head>
+
+<body>
     <div class="main">
         <div class="box">
             <h1>1. SetInterval</h1>
-            <p>This replace over and over.</p>
-            <div style="font-weight: bold;">Count: <span class="count"></span></div>
-            <p style="font-style: italic;">(Update every 1 second)</p>
+            <p>This runs over and over.</p>
+            <div style="font-weight: bold; font-size: 20px;">Count: <span class="count">0</span></div>
+            <p style="font-style: italic; color: gray;">(Update every 1 second)</p>
         </div>
         <div class="box box2">
             <h1>2. SetTimeout</h1>
@@ -56,42 +78,41 @@
 
     <script>
         function generate() {
-            const r = Math.floor(Math.random()*255)
-            const g = Math.floor(Math.random()*255)
-            const b = Math.floor(Math.random()*255)
-            return `rgb(${r},${g},${b})`
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r},${g},${b})`;
         }
-        let random = document.querySelector(".box3");
 
-        let interval = setInterval(() => {
-            random.style.backgroundColor = generate()
-            console.log();
-            
-            }, 1000);
-            
-        //=================================================
-        let box2 = document.querySelector(".box2")
-        let btn = document.querySelector(".btn")
-        btn.addEventListener("click",() => {
-            let create = document.createElement("p")
-            create.setAttribute("style","font-weight: bold;")
-            create.innerHTML=`Wait...`
-            
-            box2.appendChild(create)
-            let timeout =setTimeout(() => {
-                create.innerHTML=`Hello! The 3 seconds are up!`
-            }, 3000);
-
-        })
-        // -----------------------------
-         let count = 0;
+        const randomBox = document.querySelector(".box3");
         setInterval(() => {
-            let numb = document.querySelector(".count")
-            count++
-            numb.textContent = count
-            
+            randomBox.style.backgroundColor = generate();
         }, 1000);
-        </script>
+
+        let count = 0;
+        const numb = document.querySelector(".count");
+        setInterval(() => {
+            count++;
+            numb.textContent = count;
+        }, 1000);
+
+        const box2 = document.querySelector(".box2");
+        const btn = document.querySelector(".btn");
+
+        btn.addEventListener("click", () => {
+            btn.disabled = true; 
+
+            let create = document.createElement("p");
+            create.setAttribute("style", "font-weight: bold; color: blue;");
+            create.innerHTML = `Wait...`;
+            box2.appendChild(create);
+
+            setTimeout(() => {
+                create.innerHTML = `Hello! The 3 seconds are up!`;
+                btn.disabled = false; 
+            }, 3000);
+        });
+    </script>
 </body>
 
 </html>
